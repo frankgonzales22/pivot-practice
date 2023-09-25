@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;1,300&display=swap");
+
+* {
+  /* font-family: 'DM Sans', sans-serif; */
+  font-family: "Poppins", sans-serif;
+}
+
+
+.ReactTable { 
+  width: 1250px;
+  /* overflow-x: auto; */
+  display: block;
+  border-collapse: collapse;
+  margin-left: 40px;
+  margin-top: 20px;
+}
+
+ .headerNoWrap {
+  text-wrap: nowrap;
+ }
+ 
+
