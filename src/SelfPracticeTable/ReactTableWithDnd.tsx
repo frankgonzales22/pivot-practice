@@ -1,5 +1,5 @@
 import { SimpleGrid, Box, Table, Thead, Tbody, Tr, Td, Th, Select, Heading, Text } from '@chakra-ui/react'
-import React, { useEffect, useMemo, useReducer } from 'react'
+import React, { useEffect, useMemo, useReducer, useState } from 'react'
 import { TbSum } from "react-icons/tb";
 import { MdOutlineFilterList, MdOutlineTableRows, MdOutlineViewColumn } from "react-icons/md";
 import {
@@ -28,6 +28,8 @@ import reportBuilderStore from '../Layout/reportBuilderStore'
 import DisplayCharts from '../Layout/DisplayCharts';
 
 import ModalWithButtonList from './ModalWithButtonList';
+import DropTarget from './DragLikePivotComponents/DropTarget';
+import DraggableItem from './DragLikePivotComponents/DraggableItem';
 
 
 
@@ -51,14 +53,6 @@ const ReactTableWithDnd = () => {
             },
             {
 
-                // accessorKey: 'territorycode',
-                // header: 'TERRITORY CODE',
-                // cell: (e) => {
-                //     e.getValue();
-
-                //     return e.getValue()
-                // },
-                // getGroupingValue: (row) => `${row.territorycode}`,
                 accessorFn: row => row.territorycode,
                 id: 'territorycode',
                 header: () => <span>TERRITORY CODE</span>,
@@ -111,32 +105,6 @@ const ReactTableWithDnd = () => {
                 id: 'nsEstore',
                 aggregationFn: 'count'
             },
-
-            // practice add
-
-            // {
-            //     accessorKey: 'nsTotal',
-            //     header: 'NS TOTAL',
-            //     aggregationFn: 'sum',
-            // },
-            // {
-            //     accessorKey: 'qouta',
-            //     header: 'QOUTA',
-            //     id: 'qouta',
-            //     aggregationFn: 'sum',
-            //     // aggFunc === 'count' ? 'count' : 'min', 
-            // },
-            // {
-            //     accessorKey: 'empName',
-            //     header: 'EMP NAME',
-            //     aggregationFn: 'count',
-            // },
-            // {
-            //     accessorKey: 'nsEstore',
-            //     header: 'NS ESTORE',
-            //     id: 'nsEstore',
-            //     aggregationFn: 'count'
-            // },
 
         ], [aggFunc]
     )
@@ -214,9 +182,11 @@ const ReactTableWithDnd = () => {
             isOver: !!monitor.isOver(),
         }),
 
-    }), [orderArray]);
+    })
+        // , [orderArray]
+    );
 
-    
+
 
 
     //MAKING SURE TO ARRANGE THE DRAGGED ITEM IN ORDER
@@ -285,7 +255,7 @@ const ReactTableWithDnd = () => {
                     rowItem.splice(rowItem.indexOf(currentItem), 1), setRowItem(rowItem)
                     setcurrentItem('')
                 } else {
-                    setRowItem([...rowItem, currentItem])
+                    setDraggedItem([...draggedItem, currentItem])
                     setcurrentItem('')
                 }
             }
@@ -326,7 +296,7 @@ const ReactTableWithDnd = () => {
     const groupValue = rowItems.map(i => (Object.assign(i._valuesCache, i._groupingValuesCache)))
 
 
-    console.log(groupValue)
+    // console.log(groupValue)
     const { setDynamicData } = reportBuilderStore()
     useEffect(() => {
         setDynamicData(
@@ -335,7 +305,45 @@ const ReactTableWithDnd = () => {
     }, [rowItems])
 
 
-    console.log(draggedItem + ' dragged')
+
+
+
+    // FOR MULTIPLE DROP TARGETS
+    // const droppedItems: any[] = [];
+
+
+    const [droppedItems, setDroppedItems] = useState<any[]>([]);
+    const [ord, setOrd] = useState<any[]>([]);
+    const [trig, settrig] = useState(false)
+    const [cur, setCur] = useState('');
+
+    const [{isOver : isHover}, ref] = useDrop({
+        accept: "row",
+        drop: (item: any) => {
+            setCur(item.id)
+            settrig(!trig)
+            setDroppedItems((droppedItems) => ([...droppedItems, item.id]));
+
+
+        },
+        collect: (monitor) => ({
+            isOver: !!monitor.isOver(),
+        }),
+
+
+    });
+
+    useEffect(() => {
+        // console.log(droppedItems)
+
+        if (ord.includes(currentItem)) {
+            console.log('yes')
+        } else {
+            console.log('yow')
+            setOrd((prev) => [...prev, currentItem])
+        }
+    }, [trig])
+
 
     return (
 
@@ -350,6 +358,7 @@ const ReactTableWithDnd = () => {
                     h={400}
                     overflowX="auto"
                 >
+
                     {/* <button onClick={() => setaggFunc('min')}>set agg</button> */}
                     <Table variant="striped" colorScheme="teal">
                         <Thead position="sticky" top={0} zIndex="sticky" bgColor="white">
@@ -473,6 +482,7 @@ const ReactTableWithDnd = () => {
 
                 {/* <pre>{JSON.stringify(table.getState().columnOrder, null, 2)}</pre> */}
             </div >
+
 
             <Box style={{
                 width: '350px',
@@ -626,10 +636,10 @@ const ReactTableWithDnd = () => {
 
                             shadow="md"
                             borderWidth="1px"
-                            border={isOver ? "1px solid black" :
+                            border={isHover ? "1px solid black" :
                                 ""}
                             bg=''
-                            // ref={drop}
+                            ref={ref}
                             fontSize={'12px'}>
                             <div
                                 style={{
@@ -637,8 +647,8 @@ const ReactTableWithDnd = () => {
                                     alignItems: 'center',
                                     paddingLeft: '5px',
                                     paddingTop: '5px',
-                                    fontSize: '13px'
-
+                                    fontSize: '13px',
+                                    overflow: 'auto'
                                 }}>
                                 <TbSum />
                                 <span style={{ paddingLeft: '5px' }}>Values</span>
@@ -650,7 +660,8 @@ const ReactTableWithDnd = () => {
                                     backgroundColor: 'whitesmoke'
                                 }}
                             >
-                                <DraggedItem item={rowItem} />
+                                {/* <DropTarget onDrop={handleDrop} /> */}
+                                <DraggedItem item={droppedItems} />
                             </Box>
 
                         </Box>

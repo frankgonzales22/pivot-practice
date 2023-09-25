@@ -8,6 +8,7 @@ function DraggingItem({ id, name }: any) {
         item: { id: id },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging(),
+          
         }),
     }));
     return (
@@ -15,7 +16,9 @@ function DraggingItem({ id, name }: any) {
             <div
              style={{ fontWeight: isDragging ? "bold" : "normal", fontSize: '15px' }} 
              ref={drag}
-             >{id}</div>
+             >{id}
+            
+             </div>
         </>
     );
 }
