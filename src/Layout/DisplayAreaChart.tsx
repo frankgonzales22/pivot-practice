@@ -29,7 +29,7 @@ const DisplayAreaChart = ({ data }: DisplayAreChartProps) => {
                 <AreaChart
                     width={800}
                     height={350}
-                    data={dynamicData}
+                    data={data}
 
                 >
                     <CartesianGrid strokeDasharray="3 3" />

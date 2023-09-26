@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pie, PieChart, Tooltip } from 'recharts'
 import reportBuilderStore from './reportBuilderStore'
 import DisplayBarChart from './DisplayBarChart'
 import DisplayAreaChart from './DisplayAreaChart'
 import { Box, Heading, SimpleGrid, Text } from '@chakra-ui/react'
+import newSaleData from '../newSale'
 
+type Template = {
+    templateTitle : string;
+    templateId: number;
+    chart: string;
+    row: string[];
+    value: string[];
+    templateData : [];
+};
 
 
 const DisplayCharts = () => {
 
 
 
-    const templates = [
+    const templates1 = [
         {
             templateId: 0,
             title: 'Template 1',
@@ -19,7 +28,8 @@ const DisplayCharts = () => {
             row: ['regioncode'],
             value: [
                 'quota', 'nsTotal'
-            ]
+            ],
+            data: []
         },
 
         {
@@ -52,15 +62,36 @@ const DisplayCharts = () => {
     ]
 
 
+    const [templates, setTemplates] = useState<Template[]>([]);
 
-    const { dynamicData } = reportBuilderStore()
+    // Key to store data in local storage
+    const localStorageKey = 'templatesData';
+
+
+ 
+    // Load data from local storage when the component mounts
+    useEffect(() => {
+        const storedData = localStorage.getItem(localStorageKey);
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setTemplates(parsedData);
+
+        }
+
+     
+    }, []);
+
+    console.log(templates)
+
+    const [dynamicData, setData] = React.useState(newSaleData as [])
+    // const { dynamicData } = reportBuilderStore()
 
     function TemplateComponent({ template }: any) {
         switch (template.chart) {
             case 'barChart':
-                return <DisplayBarChart data={dynamicData} />;
+                return <DisplayBarChart data={template.templateData} />;
             case 'areaChart':
-                return <DisplayAreaChart data={dynamicData} />;
+                return <DisplayAreaChart data={template.templateData} />;
             default:
                 return null; // Handle the case where the chart type is unknown
         }
@@ -79,6 +110,7 @@ const DisplayCharts = () => {
 
                 }}
             >
+               
                 {templates.map((template) => (
 
 
@@ -94,10 +126,10 @@ const DisplayCharts = () => {
                         key={template.templateId}>
                         <Heading
                             margin={'20px 100px'}
-                     
-                            style={{ color: '#2d8659' }}
-                        >{template.title}</Heading>
 
+                            style={{ color: '#2d8659' }}
+                        >{template.templateTitle}</Heading>
+                         {/* {JSON.stringify(template.templateData)} */}
                         <TemplateComponent template={template} />
                     </Box>
 

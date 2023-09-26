@@ -30,7 +30,7 @@ const DisplayBarChart = ({ data }: DisplayBarChartProps) => {
 
                 <BarChart
                     width={800}
-                    height={350} data={dynamicData}
+                    height={350} data={data}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
