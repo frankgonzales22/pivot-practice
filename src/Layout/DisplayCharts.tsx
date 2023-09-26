@@ -1,43 +1,79 @@
-import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts'
+import React from 'react'
+import { Pie, PieChart, Tooltip } from 'recharts'
 import reportBuilderStore from './reportBuilderStore'
+import DisplayBarChart from './DisplayBarChart'
+import DisplayAreaChart from './DisplayAreaChart'
+import { Box, SimpleGrid } from '@chakra-ui/react'
+
+
 
 const DisplayCharts = () => {
 
+
+
+    const templates = [
+        {
+            templateId: 0,
+            chart: 'barChart',
+            row: ['regioncode'],
+            value: [
+                'quota', 'nsTotal'
+            ]
+        },
+
+        {
+            templateId: 1,
+            chart: 'areaChart',
+            row: ['territorycode'],
+            value: [
+                'quota', 'nsTotal'
+            ],
+        }
+    ]
+
+
+
     const { dynamicData } = reportBuilderStore()
+
+    function TemplateComponent({ template }: any) {
+        switch (template.chart) {
+            case 'barChart':
+                return <DisplayBarChart data={dynamicData} />;
+            case 'areaChart':
+                return <DisplayAreaChart data={dynamicData} />;
+            default:
+                return null; // Handle the case where the chart type is unknown
+        }
+    }
+
     return (
+
+
         <>
-            <div
-                style={{
-                    height: '40px',
-                    // paddingTop: '10px',
-                    // marginTop: '10px',
-                    marginLeft: '60px'
+            <SimpleGrid
+
+                templateColumns={{
+                    base: '1fr',
+                    md: '1fr',
+                    lg: '1fr 1fr'
+
                 }}
             >
-                <BarChart
-                    width={1230}
-                    height={350} data={dynamicData}
-                >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
-                    //  xAxisId={0} 
-                     dataKey="regioncode" 
-                     />
-                     <XAxis
-                    //  xAxisId={0} 
-                     dataKey="territorycode" 
-                     />
-                    <YAxis width={105}/>
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="qouta" fill="#8884d8" />
-                    <Bar dataKey="nsTotal" fill="#82ca9d" />
-                </BarChart>
+                {templates.map((template) => (
+                    <Box
+                        marginTop={'10px'}
+                        borderRadius={'20px'}
+                        backgroundColor={'white'}
+                        width={'95%'}
+                        minH={'350px'}
 
-            </div >
+                        key={template.templateId}>
+                        <TemplateComponent template={template} />
+                    </Box>
+                ))}
+            </SimpleGrid>
 
         </>
-
     )
 }
 

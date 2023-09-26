@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom"
 import Layout from "./Layout"
 import ReactTableNewSales from "../ReactTable/ReactTableNewSales"
-import DisplayCharts from "./DisplayCharts"
+
 import ReactTableWithDnd from "../SelfPracticeTable/ReactTableWithDnd"
+import DisplayCharts from "./DisplayCharts"
 
 
 

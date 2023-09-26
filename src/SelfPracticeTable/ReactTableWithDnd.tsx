@@ -1,4 +1,4 @@
-import { SimpleGrid, Box, Table, Thead, Tbody, Tr, Td, Th, Select, Heading, Text } from '@chakra-ui/react'
+import { SimpleGrid, Box, Table, Thead, Tbody, Tr, Td, Th, Select, Heading, Text, Button } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useReducer, useState } from 'react'
 import { TbSum } from "react-icons/tb";
 import { MdOutlineFilterList, MdOutlineTableRows, MdOutlineViewColumn } from "react-icons/md";
@@ -25,11 +25,14 @@ import { useDrag, useDrop } from 'react-dnd'
 import DraggingItem from './DragLikePivotComponents/DraggingItem'
 import DraggedItem from './DragLikePivotComponents/DraggedItem'
 import reportBuilderStore from '../Layout/reportBuilderStore'
-import DisplayCharts from '../Layout/DisplayCharts';
+
 
 import ModalWithButtonList from './ModalWithButtonList';
 import DropTarget from './DragLikePivotComponents/DropTarget';
 import DraggableItem from './DragLikePivotComponents/DraggableItem';
+import DisplayBarCharts from '../Layout/DisplayBarChart';
+import DisplayBarChart from '../Layout/DisplayBarChart';
+import DisplayAreaChart from '../Layout/DisplayAreaChart';
 
 
 
@@ -202,8 +205,6 @@ const ReactTableWithDnd = () => {
             ) :
             (console.log('nowy'), setColumnOrder(orderArray))
 
-
-
     }, [orderArray])
 
 
@@ -292,11 +293,12 @@ const ReactTableWithDnd = () => {
 
 
     const rowItems = table.getRowModel().rows
-
+    // console.log(rowItems)
     const groupValue = rowItems.map(i => (Object.assign(i._valuesCache, i._groupingValuesCache)))
 
-
+    // console.log(rowItems)
     // console.log(groupValue)
+
     const { setDynamicData } = reportBuilderStore()
     useEffect(() => {
         setDynamicData(
@@ -317,12 +319,14 @@ const ReactTableWithDnd = () => {
     const [trig, settrig] = useState(false)
     const [cur, setCur] = useState('');
 
-    const [{isOver : isHover}, ref] = useDrop({
+    const [{ isOver: isHover }, ref] = useDrop({
         accept: "row",
         drop: (item: any) => {
-            setCur(item.id)
-            settrig(!trig)
-            setDroppedItems((droppedItems) => ([...droppedItems, item.id]));
+            setCur(item.id),
+                settrig(!trig),
+                setDroppedItems((droppedItems) => ([...droppedItems, item.id])),
+                setOrderArray((orderArray) => ([...orderArray, item.id])),
+                table.getColumn(item.id.toString()!)?.toggleVisibility()
 
 
         },
@@ -344,6 +348,8 @@ const ReactTableWithDnd = () => {
         }
     }, [trig])
 
+
+    const [selectedChart, setSelectedChart] = useState<string>('')
 
     return (
 
@@ -668,16 +674,33 @@ const ReactTableWithDnd = () => {
                     </SimpleGrid>
                 </div>
             </Box >
-            <Box width={'250px'} padding={'10px 40px'} >
-                <Select placeholder='Choose charts' cursor={'pointer'}>
-                    <option value='option1' style={{ cursor: 'pointer' }}>Bar Chart</option>
-                    <option value='option2'>Pie Chart</option>
-                    <option value='option3'></option>
+            <Box width={'400px'} padding={'10px 40px'} display={'flex'} gap={'30px'}>
+                <Select placeholder='Choose charts' cursor={'pointer'} onChange={(e) => setSelectedChart(e.target.value)}>
+                    <option value='option1' style={{ cursor: 'pointer' }} >Bar Chart</option>
+                    <option value='option2'>Area Chart</option>
+                    {/* <option value='option3'></option> */}
                 </Select>
+                <Button colorScheme='teal' width={'200px'} onClick={() => console.log('yeloow')}>Save</Button>
             </Box>
-            {
-                table.getIsSomeColumnsVisible() && <DisplayCharts />
+
+            {selectedChart &&
+                <Box
+                    style={{
+                        marginLeft : '20px',
+                        width: '1350px',
+                        height: '350px'
+                    }}
+                >
+                    {selectedChart === 'option1' && <DisplayBarChart />}
+                    {selectedChart === 'option2' && <DisplayAreaChart />}
+                </Box>
             }
+
+
+            {/*             
+            {
+                table.getIsSomeColumnsVisible() && <DisplayAreaCharts />
+            } */}
 
         </>
     )
