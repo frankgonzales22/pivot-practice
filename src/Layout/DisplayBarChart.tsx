@@ -2,7 +2,8 @@ import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAx
 import reportBuilderStore from './reportBuilderStore'
 
 interface DisplayBarChartProps {
-    data?: []
+    data?: [],
+    title? : string
 }
 
 
@@ -20,12 +21,13 @@ const DisplayBarChart = ({ data }: DisplayBarChartProps) => {
                 }}
             > */}
 
-
+  
             <ResponsiveContainer
                 width='90%' height='100%'
 
 
             >
+
                 <BarChart
                     width={800}
                     height={350} data={dynamicData}

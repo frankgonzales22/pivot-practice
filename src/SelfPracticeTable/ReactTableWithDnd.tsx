@@ -319,6 +319,9 @@ const ReactTableWithDnd = () => {
     const [trig, settrig] = useState(false)
     const [cur, setCur] = useState('');
 
+
+    // DROP FOR VALUES
+
     const [{ isOver: isHover }, ref] = useDrop({
         accept: "row",
         drop: (item: any) => {
@@ -350,6 +353,7 @@ const ReactTableWithDnd = () => {
 
 
     const [selectedChart, setSelectedChart] = useState<string>('')
+    console.log(droppedItems)
 
     return (
 
