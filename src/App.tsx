@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './App.css'
+// import './App.css'
 import PivotPractice from './PIvotPractice.tsx/PivotPractice'
 import DynamicArray from './PIvotPractice.tsx/DynamicArray'
 import ReacTable from './ReactTable/ReacTable'

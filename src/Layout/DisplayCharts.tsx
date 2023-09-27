@@ -101,6 +101,7 @@ const DisplayCharts = () => {
 
 
         <>
+        {JSON.stringify(templates)}
             <SimpleGrid
 
                 templateColumns={{

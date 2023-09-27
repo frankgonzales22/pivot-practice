@@ -5,6 +5,7 @@ import { MdOutlineFilterList, MdOutlineTableRows, MdOutlineViewColumn } from "re
 import {
     ColumnDef,
     ColumnOrderState,
+    ColumnSort,
     flexRender,
     getCoreRowModel,
     getExpandedRowModel,
@@ -40,7 +41,7 @@ const ReactTableWithDnd = () => {
 
     const [sorting, setSorting] = React.useState<SortingState>([
         // { id: "territorycode", desc: false },
-        { id: "regioncode", desc: false },
+        // { id: "regioncode", desc: false },
 
     ])
     const [aggFunc, setaggFunc] = React.useState('count')
@@ -296,18 +297,29 @@ const ReactTableWithDnd = () => {
     // console.log(rowItems)
     const groupValue = rowItems.map(i => (Object.assign(i._valuesCache, i._groupingValuesCache)))
 
-    console.log(rowItems)
+    console.log(groupValue)
 
 
     // console.log(rowItems)
     // console.log(groupValue)
+    const [ValuesCache, setValuesCache] = useState([])
 
     const { dynamicData, setDynamicData } = reportBuilderStore()
     useEffect(() => {
+        console.log(ValuesCache)
         setDynamicData(
             groupValue,
         )
+        // rowItems?.map(i => 
+        
+        // // sorting.push(i._valuesCache as any)
+        // // setSorting(prev => [...prev, i.groupingValue!])
+        // )
     }, [rowItems])
+
+
+    console.log(sorting)
+
 
 
 
