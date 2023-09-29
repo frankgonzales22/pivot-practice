@@ -130,9 +130,9 @@ const ReactTableWithDnd = () => {
                 header: 'NS ESTORE',
                 id: 'NS ESTORE',
                 aggregationFn: 'count',
-                enableSorting : true,
-                sortingFn: 'basic',
-                sortDescFirst: true,
+                // enableSorting : true,
+                // sortingFn: 'basic',
+                // sortDescFirst: true,
             },
 
         ], [aggFunc]
@@ -286,19 +286,19 @@ const ReactTableWithDnd = () => {
             const isVisble = table.getColumn(currentItem)?.getIsVisible()
             if (!isVisble) {
                 draggedItem.splice(draggedItem.indexOf(currentItem), 1), setDraggedItem(draggedItem)
-                // setSorting(prevSorting => prevSorting.filter(item => item.id !== currentItem));
+                setSorting(prevSorting => prevSorting.filter(item => item.id !== currentItem));
                 rowItem.splice(rowItem.indexOf(currentItem), 1), setRowItem(rowItem)
                 setcurrentItem('')
 
             } else {
                 if (draggedItem.includes(currentItem)) {
                     draggedItem.splice(draggedItem.indexOf(currentItem), 1), setDraggedItem(draggedItem)
-                    // setSorting(prevSorting => prevSorting.filter(item => item.id !== currentItem));
+                    setSorting(prevSorting => prevSorting.filter(item => item.id !== currentItem));
                     rowItem.splice(rowItem.indexOf(currentItem), 1), setRowItem(rowItem)
                     setcurrentItem('')
                 } else {
                     setDraggedItem([...draggedItem, currentItem])
-                    // setSorting(prev => [...prev, { id: currentItem, desc: false }])
+                    setSorting(prev => [...prev, { id: currentItem, desc: false }])
                     setcurrentItem('')
                 }
             }
@@ -680,7 +680,7 @@ const ReactTableWithDnd = () => {
                                     <label
                                         style={{ display: 'inline-flex', fontSize: '12px', cursor: 'pointer' }}
                                     >
-                                        <input
+                                        {/* <input
 
                                             style={{ margin: '3px' }}
                                             {...{
@@ -690,7 +690,7 @@ const ReactTableWithDnd = () => {
 
                                                 onChange: column.getToggleVisibilityHandler()
                                             }}
-                                        />
+                                        /> */}
                                         <DraggingItem key={column.id} id={column.id} name={column.id} />
                                     </label>
                                 </div>
