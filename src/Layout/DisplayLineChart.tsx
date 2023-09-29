@@ -12,7 +12,14 @@ interface DisplayLineChartProps {
 const DisplayLineChart = ({ data, row, col }: DisplayLineChartProps) => {
 
     const tooltipFormatter = (value: number) => {
-        if (value >= 1000) {
+        if (value >= 1_000_000) {
+            // Convert to millions and format with 2 decimal places
+            const millionValue = (value / 1_000_000).toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+            });
+            return `${millionValue}M`;
+
+        } else if (value >= 1000) {
             // Convert to millions and format with 2 decimal places
             const millionValue = (value / 1000).toLocaleString(undefined, {
                 maximumFractionDigits: 2,
