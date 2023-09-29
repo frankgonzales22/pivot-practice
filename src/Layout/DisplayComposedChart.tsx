@@ -12,6 +12,32 @@ interface DisplayComposedChartProps {
 }
 
 const DisplayComposedChart = ({ data, row, col }: DisplayComposedChartProps) => {
+
+
+    const tooltipFormatter = (value: number) => {
+        if (value >= 1000) {
+            // Convert to millions and format with 2 decimal places
+            const millionValue = (value / 1000).toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+            });
+            return `${millionValue}K`;
+        }
+
+    };
+
+    const formatYAxisLabel = (value: number, index: number) => {
+        if (value >= 1000000) {
+            // Convert to millions and format with 2 decimal places
+            const millionValue = (value / 1000000).toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+            });
+            return `${millionValue}M`;
+        }
+
+        // For values less than a million, format with 2 decimal places
+        return `${value.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+    };
+
     return (
         <ResponsiveContainer width='90%' height='100%'>
             <ComposedChart
@@ -21,8 +47,8 @@ const DisplayComposedChart = ({ data, row, col }: DisplayComposedChartProps) => 
                 {row?.map((i, index) =>
                     <XAxis dataKey={i} xAxisId={index} />
                 )}
-                <YAxis width={105} />
-                <Tooltip />
+                <YAxis width={105} tickFormatter={formatYAxisLabel} />
+                <Tooltip formatter={tooltipFormatter}/>
 
                 {/* 'line' | 'plainline' | 'square' */}
 
@@ -40,7 +66,7 @@ const DisplayComposedChart = ({ data, row, col }: DisplayComposedChartProps) => 
                 {col?.map((i, index) =>
                     (index + 1) % 3 === 0 ?
                         <Line type="monotone"
-                            
+
                             dataKey={i}
                             // stackId={index}
                             stroke={`rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`}

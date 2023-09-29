@@ -12,7 +12,30 @@ const DisplayBarChart = ({ data, row, col }: DisplayBarChartProps) => {
 
 
 
-    // const revRows = row?.reverse();
+    const revRows = row?.reverse();
+    const tooltipFormatter = (value: number) => {
+        if (value >= 1000) {
+            // Convert to millions and format with 2 decimal places
+            const millionValue = (value / 1000).toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+            });
+            return `${millionValue}K`;
+        }
+
+    };
+
+    const formatYAxisLabel = (value: number, index: number) => {
+        if (value >= 1000000) {
+            // Convert to millions and format with 2 decimal places
+            const millionValue = (value / 1000000).toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+            });
+            return `${millionValue}M`;
+        }
+
+        // For values less than a million, format with 2 decimal places
+        return `${value.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+    };
 
     console.log(row?.reverse())
 
@@ -28,6 +51,7 @@ const DisplayBarChart = ({ data, row, col }: DisplayBarChartProps) => {
             > */}
 
 
+
             <ResponsiveContainer
                 width='90%' height='100%'
 
@@ -40,27 +64,27 @@ const DisplayBarChart = ({ data, row, col }: DisplayBarChartProps) => {
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     {row?.map((i, index) =>
-                        <XAxis key={index} dataKey={i} 
-                        xAxisId={index} 
-                        //  interval={index === 2 ? 10 : index === 1 ? 3 : 1}
-                          tickLine={true}/>
+                        <XAxis key={index} dataKey={i}
+                            xAxisId={index}
+                            //  interval={index === 2 ? 10 : index === 1 ? 3 : 1}
+                            tickLine={true} />
                         // <Line key={index} dataKey={i} />
                     )}
-         
 
 
 
-                    <YAxis width={105} />
-                    <Tooltip />
+
+                    <YAxis width={105} type="number" tickFormatter={formatYAxisLabel} />
+                    <Tooltip formatter={tooltipFormatter} />
                     <Legend />
 
                     {col?.map((i, index) =>
                         <Bar
                             // type="monotone"
-                            key={index} 
+                            key={index}
                             dataKey={i}
                             stackId={index}
-                            
+
                             // stroke={`rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`}
                             fill={`rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`}
                         />

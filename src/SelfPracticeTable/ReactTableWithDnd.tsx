@@ -90,8 +90,10 @@ const ReactTableWithDnd = () => {
                 accessorKey: 'nsCollection',
                 id: 'NS COLLECTION',
                 header: () => 'NS COLLECTION',
+                // aggregatedCell: ({ getValue }) =>
+                //     Math.round(getValue<number>() * 100) / 100,
                 aggregatedCell: ({ getValue }) =>
-                    Math.round(getValue<number>() * 100) / 100,
+                getValue<number>().toLocaleString(),
                 aggregationFn: 'sum',
             },
             {
@@ -108,11 +110,15 @@ const ReactTableWithDnd = () => {
                 id: 'NS TOTAL',
                 header: 'NS TOTAL',
                 aggregationFn: 'sum',
+                aggregatedCell: ({ getValue }) =>
+                getValue<number>().toLocaleString(),
             },
             {
                 accessorKey: 'qouta',
                 header: 'QOUTA',
                 id: 'QOUTA',
+                aggregatedCell: ({ getValue }) =>
+                    getValue<number>().toLocaleString(),
                 aggregationFn: 'sum',
                 // sortingFn: 'basic',
                 // sortDescFirst: true,
@@ -130,6 +136,8 @@ const ReactTableWithDnd = () => {
                 header: 'NS ESTORE',
                 id: 'NS ESTORE',
                 aggregationFn: 'count',
+                aggregatedCell: ({ getValue }) =>
+                getValue<number>().toLocaleString(),
                 // enableSorting : true,
                 // sortingFn: 'basic',  
                 // sortDescFirst: true,
