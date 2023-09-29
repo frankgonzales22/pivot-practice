@@ -12,7 +12,7 @@ const DisplayBarChart = ({ data, row, col }: DisplayBarChartProps) => {
 
 
 
-    const revRows = row?.reverse();
+    // const revRows = row?.reverse();
     const tooltipFormatter = (value: number) => {
         if (value >= 1000) {
             // Convert to millions and format with 2 decimal places
@@ -24,7 +24,7 @@ const DisplayBarChart = ({ data, row, col }: DisplayBarChartProps) => {
 
     };
 
-    const formatYAxisLabel = (value: number, index: number) => {
+    const formatYAxisLabel = (value: number) => {
         if (value >= 1000000) {
             // Convert to millions and format with 2 decimal places
             const millionValue = (value / 1000000).toLocaleString(undefined, {

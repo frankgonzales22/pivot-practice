@@ -25,7 +25,7 @@ const DisplayComposedChart = ({ data, row, col }: DisplayComposedChartProps) => 
 
     };
 
-    const formatYAxisLabel = (value: number, index: number) => {
+    const formatYAxisLabel = (value: number) => {
         if (value >= 1000000) {
             // Convert to millions and format with 2 decimal places
             const millionValue = (value / 1000000).toLocaleString(undefined, {
