@@ -40,7 +40,7 @@ const ReactTableWithDnd = () => {
 
     const [aggFunc
         // , setaggFunc
-    ]= React.useState('count')
+    ] = React.useState('count')
 
     const defaultColumns = useMemo<ColumnDef<NewSale>[]>(
         () => [
@@ -59,7 +59,7 @@ const ReactTableWithDnd = () => {
 
                 accessorFn: row => row.territorycode,
                 id: 'TERRITORY CODE',
-                header: () => <span>TERRITORY CODE</span>,
+                header: () => <div>TERRITORY CODE</div>,
                 // sortingFn : 'alphanumericCaseSensitive',
                 // sortDescFirst : false,
                 // aggregationFn: 'count',
@@ -74,7 +74,7 @@ const ReactTableWithDnd = () => {
                 // sortingFn : 'text',
                 // sortDescFirst : false,
                 // enableSorting : true,
-                header: () => <span>REGION CODE</span>,
+                header: () => <div>REGION CODE</div>,
                 aggregationFn: 'count',
 
             },
@@ -82,24 +82,32 @@ const ReactTableWithDnd = () => {
             {
                 accessorFn: row => row.motherbranchcode,
                 id: 'MOTHER BRANCHCODE',
-                header: () => <span>MOTHERBRANCH CODE</span>,
+                header: () => <div>MOTHERBRANCH CODE</div>,
                 aggregationFn: 'count',
 
             },
             {
                 accessorKey: 'nsCollection',
                 id: 'NS COLLECTION',
-                header: () => 'NS COLLECTION',
-                // aggregatedCell: ({ getValue }) =>
-                //     Math.round(getValue<number>() * 100) / 100,
+                header: () => <div style={{
+                    textAlign: "right"
+                }}>NS COLLECTION</div>,
                 aggregatedCell: ({ getValue }) =>
-                getValue<number>().toLocaleString(),
+                    <div style={{
+                        textAlign: "right"
+                    }}> {getValue<number>().toLocaleString()} </div>,
                 aggregationFn: 'sum',
             },
             {
                 accessorKey: 'nsRegular',
                 id: 'NS REGULAR',
-                header: () => <span>NS REGULAR</span>,
+                header: () => <div style={{
+                    textAlign: "right"
+                }}>NS REGULAR</div>,
+                aggregatedCell: ({ getValue }) =>
+                    <div style={{
+                        textAlign: "right"
+                    }}> {getValue<number>().toLocaleString()} </div>,
                 aggregationFn:
 
                     'min',
@@ -108,17 +116,25 @@ const ReactTableWithDnd = () => {
             {
                 accessorKey: 'nsTotal',
                 id: 'NS TOTAL',
-                header: 'NS TOTAL',
                 aggregationFn: 'sum',
+                header: () => <div style={{
+                    textAlign: "right"
+                }}>NS TOTAL</div>,
                 aggregatedCell: ({ getValue }) =>
-                getValue<number>().toLocaleString(),
+                    <div style={{
+                        textAlign: "right"
+                    }}> {getValue<number>().toLocaleString()} </div>,
             },
             {
                 accessorKey: 'qouta',
-                header: 'QOUTA',
+                header: () => <div style={{
+                    textAlign: "right"
+                }}>QOUTA</div>,
                 id: 'QOUTA',
                 aggregatedCell: ({ getValue }) =>
-                    getValue<number>().toLocaleString(),
+                    <div style={{
+                        textAlign: "right"
+                    }}> {getValue<number>().toLocaleString()} </div>,
                 aggregationFn: 'sum',
                 // sortingFn: 'basic',
                 // sortDescFirst: true,
@@ -129,15 +145,20 @@ const ReactTableWithDnd = () => {
                 id: 'EMP NAME',
                 header: 'EMP NAME',
                 aggregationFn: 'count',
-                sortDescFirst : true
+                sortDescFirst: true
             },
             {
                 accessorKey: 'nsEstore',
-                header: 'NS ESTORE',
+                header: () => <div style={{
+                    textAlign: "right"
+                }}>NS ESTORE</div>,
                 id: 'NS ESTORE',
                 aggregationFn: 'count',
                 aggregatedCell: ({ getValue }) =>
-                getValue<number>().toLocaleString(),
+                    <div style={{
+                        textAlign: "right"
+                    }}>{getValue<number>().toLocaleString()}</div>,
+
                 // enableSorting : true,
                 // sortingFn: 'basic',  
                 // sortDescFirst: true,
@@ -362,7 +383,7 @@ const ReactTableWithDnd = () => {
     const [ValuesCache
         // ,
         //  setValuesCache
-        ] = useState([])
+    ] = useState([])
 
     const { dynamicData, setDynamicData } = reportBuilderStore()
     useEffect(() => {
@@ -403,7 +424,7 @@ const ReactTableWithDnd = () => {
         accept: "row",
         drop: (item: any) => {
             // setCur(item.id),
-                settrig(!trig),
+            settrig(!trig),
                 setDroppedItems((droppedItems) => ([...droppedItems, item.id])),
                 setOrderArray((orderArray) => ([...orderArray, item.id])),
                 table.getColumn(item.id.toString()!)?.toggleVisibility()
@@ -525,9 +546,13 @@ const ReactTableWithDnd = () => {
                                 <tr key={headerGroup.id}>
                                     {headerGroup.headers.map(header => {
                                         return (
-                                            <Th key={header.id} colSpan={header.colSpan} fontWeight={'bold'} color={'black'} fontSize={'md'} marginX={'15px'}>
+                                            <Th key={header.id} colSpan={header.colSpan} fontWeight={'bold'} color={'black'} fontSize={'md'}
+                                            //  marginX={'15px'} 
+                                             	>
                                                 {header.isPlaceholder ? null : (
-                                                    <div className='headerNoWrap' style={{ margin: '10px 10px' }}>
+                                                    <div className='headerNoWrap' 
+                                                    // style={{ margin: '10px 10px' }}
+                                                    >
                                                         {header.column.getCanGroup() ? (
                                                             // If the header can be grouped, let's add a toggle
                                                             <button
@@ -572,6 +597,7 @@ const ReactTableWithDnd = () => {
                                                 map(cell => {
                                                     return (
                                                         <Td
+                                                            // textAlign={'right'}
                                                             {...{
                                                                 key: cell.id,
                                                                 // style: {
