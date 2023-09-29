@@ -131,7 +131,7 @@ const ReactTableWithDnd = () => {
                 id: 'NS ESTORE',
                 aggregationFn: 'count',
                 // enableSorting : true,
-                // sortingFn: 'basic',
+                // sortingFn: 'basic',  
                 // sortDescFirst: true,
             },
 
