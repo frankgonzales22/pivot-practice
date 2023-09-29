@@ -10,7 +10,43 @@ interface DisplayAreChartProps {
 
 
 const DisplayAreaChart = ({ data, row, col }: DisplayAreChartProps) => {
+    const tooltipFormatter = (value: number) => {
+        if (value >= 1_000_000) {
+            // Convert to millions and format with 2 decimal places
+            const millionValue = (value / 1_000_000).toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+            });
+            return `${millionValue}M`;
 
+        } else if (value >= 1000) {
+            // Convert to millions and format with 2 decimal places
+            const millionValue = (value / 1000).toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+            });
+            return `${millionValue}K`;
+        }
+        // if (value >= 1_000_000) {
+        //     // Convert to millions and format with 2 decimal places
+        //     const millionValue = (value / 1_000_000).toLocaleString(undefined, {
+        //         maximumFractionDigits: 2,
+        //     });
+        //     return `${millionValue}M`;
+
+        // };
+    }
+
+    const formatYAxisLabel = (value: number, index: number) => {
+        if (value >= 1000000) {
+            // Convert to millions and format with 2 decimal places
+            const millionValue = (value / 1000000).toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+            });
+            return `${millionValue}M`;
+        }
+
+        // For values less than a million, format with 2 decimal places
+        return `${value.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+    };
 
 
     return (
@@ -40,15 +76,15 @@ const DisplayAreaChart = ({ data, row, col }: DisplayAreChartProps) => {
                     // width={300}
                     /> */}
                     {row?.map((i, index) =>
-                        <XAxis key={index}  dataKey={i} xAxisId={index} />
+                        <XAxis key={index} dataKey={i} xAxisId={index} />
                         // {JSON.stringify(i)}
                     )}
 
-                    <YAxis width={105} />
+                    <YAxis width={105} tickFormatter={formatYAxisLabel} />
 
                     <Legend iconType='square' />
 
-                    <Tooltip />
+                    <Tooltip formatter={tooltipFormatter} />
 
                     {/* <Area type="monotone" dataKey="qouta" stackId="1" stroke="#8884d8" fill="#8884d8" />
                     <Area type="monotone" dataKey="nsTotal" stackId="1" stroke="#82ca9d" fill="#82ca9d" /> */}
