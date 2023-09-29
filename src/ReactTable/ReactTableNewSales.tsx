@@ -17,7 +17,6 @@ import {
 
 } from '@tanstack/react-table'
 import newSalesData, { NewSales } from './newSales'
-import { group, info } from 'console'
 import reportBuilderStore from '../Layout/reportBuilderStore'
 
 const ReactTableNewSales = () => {
@@ -162,7 +161,7 @@ const ReactTableNewSales = () => {
 
     console.log(rowItems)
 
-    const { dynamicData, setDynamicData } = reportBuilderStore()
+    const { setDynamicData } = reportBuilderStore()
     useEffect(() => {
         setDynamicData(
             groupValue,

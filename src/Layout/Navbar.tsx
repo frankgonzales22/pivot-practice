@@ -21,18 +21,10 @@ import {
     MenuDivider,
     MenuItem,
     MenuList,
-    Grid,
-    GridItem,
-    Image,
-    SimpleGrid,
-    Center
-} from '@chakra-ui/react'
+    Image} from '@chakra-ui/react'
 import {
     FiHome,
     FiTrendingUp,
-    FiCompass,
-    FiStar,
-    FiSettings,
     FiMenu,
     FiBell,
     FiChevronDown,

@@ -1,10 +1,8 @@
-import React from "react";
-import { useDrag } from "react-dnd";
-import { item } from "./DnDFirst";
-import { Person as Person1 } from "./Array1VIs";
-import { Person } from "../ReactColumnOrder/dataOrder";
 
-function DraggableItem({ id , name } : any) {
+import { useDrag } from "react-dnd";
+
+
+function DraggableItem({ id  } : any) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "column",
     item: { id: id }, 

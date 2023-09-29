@@ -2,7 +2,7 @@
 import { useDrag } from "react-dnd";
 
 
-function DraggingItem({ id, name }: any) {
+function DraggingItem({ id }: any) {
     const [{ isDragging }, drag] = useDrag(() => ({
         type: "row",
         item: { id: id },

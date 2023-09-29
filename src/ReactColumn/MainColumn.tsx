@@ -99,7 +99,7 @@ const defaultColumns: ColumnDef<Person>[] = [
 ]
 
 const MainColumn = () => {
-  const [data, setData] = React.useState(() => [...defaultData])
+  const [data] = React.useState(() => [...defaultData])
   const [columns] = React.useState<typeof defaultColumns>(() => [
     ...defaultColumns,
   ])

@@ -1,15 +1,21 @@
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import reportBuilderStore from './reportBuilderStore'
+
 
 interface DisplayBarChartProps {
     data?: [],
-    title? : string
+    row?: string[]
+    col?: string[]
 }
 
 
-const DisplayBarChart = ({ data }: DisplayBarChartProps) => {
+const DisplayBarChart = ({ data, row, col }: DisplayBarChartProps) => {
 
-    const { dynamicData } = reportBuilderStore()
+
+
+    // const revRows = row?.reverse();
+
+    console.log(row?.reverse())
+
     return (
         <>
             {/* <div
@@ -21,7 +27,7 @@ const DisplayBarChart = ({ data }: DisplayBarChartProps) => {
                 }}
             > */}
 
-  
+
             <ResponsiveContainer
                 width='90%' height='100%'
 
@@ -33,19 +39,34 @@ const DisplayBarChart = ({ data }: DisplayBarChartProps) => {
                     height={350} data={data}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
-                        //  xAxisId={0} 
-                        dataKey="regioncode"
-                    />
-                    <XAxis
-                        //  xAxisId={0} 
-                        dataKey="territorycode"
-                    />
+                    {row?.map((i, index) =>
+                        <XAxis key={index} dataKey={i} 
+                        xAxisId={index} 
+                        //  interval={index === 2 ? 10 : index === 1 ? 3 : 1}
+                          tickLine={true}/>
+                        // <Line key={index} dataKey={i} />
+                    )}
+         
+
+
+
                     <YAxis width={105} />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="qouta" fill="#8884d8" />
-                    <Bar dataKey="nsTotal" fill="#82ca9d" />
+
+                    {col?.map((i, index) =>
+                        <Bar
+                            // type="monotone"
+                            key={index} 
+                            dataKey={i}
+                            stackId={index}
+                            
+                            // stroke={`rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`}
+                            fill={`rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`}
+                        />
+                    )}
+
+
                 </BarChart>
             </ResponsiveContainer>
 

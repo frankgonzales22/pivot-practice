@@ -9,8 +9,8 @@
 // } from "@imc-trading/react-pivottable";
 
 // import "@imc-trading/react-pivottable/pivottable.css";
-import { useState } from "react";
-import dataJSON from '../dataJSON.json'
+
+// import dataJSON from '../dataJSON.json'
 
 // const PlotlyRenderers = createPlotlyRenderers(Plotly); // or createPlotlyRenderers(window.Plotly)
 
@@ -20,26 +20,26 @@ import dataJSON from '../dataJSON.json'
 //     ["attribute", "attribute2"],
 //     ["value1", "value2"],
 // ];
-const data = [
-    {
-        id: 1,
-        firstName: "Jose",
-        lastName: "Perez",
-        age: 20
-    },
-    {
-        id: 2,
-        firstName: "Carlos",
-        lastName: "Perez",
-        age: 20
-    },
-    {
-        id: 3,
-        firstName: "Juan",
-        lastName: "Alberto",
-        age: 20
-    }
-];
+// const data = [
+//     {
+//         id: 1,
+//         firstName: "Jose",
+//         lastName: "Perez",
+//         age: 20
+//     },
+//     {
+//         id: 2,
+//         firstName: "Carlos",
+//         lastName: "Perez",
+//         age: 20
+//     },
+//     {
+//         id: 3,
+//         firstName: "Juan",
+//         lastName: "Alberto",
+//         age: 20
+//     }
+// ];
 
 const data1 = [
     { territorycode: "BT", regioncode: "BT1", },
@@ -76,7 +76,7 @@ const PivotPractice = () => {
     }, {});
 
     console.log(result);
-    const [pivottableState, setPivottableState] = useState({});
+  
     return (
         <>
             {JSON.stringify(data1)}

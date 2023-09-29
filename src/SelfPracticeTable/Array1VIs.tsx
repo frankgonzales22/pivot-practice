@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ArrayComp from './ArrayComp'
+
 
 
 
@@ -7,7 +7,6 @@ import '../index.css'
 
 import {
     ColumnDef,
-    Visibility,
     flexRender,
     getCoreRowModel,
     useReactTable,
@@ -57,15 +56,13 @@ const defaultColumns: ColumnDef<Person>[] = [
 
 import { useDrag, useDrop } from "react-dnd";
 import DraggableItem from './DraggableItem'
-import { shallow } from 'zustand/shallow'
-import { id_ID } from '@faker-js/faker'
 
 
 const Array1 = () => {
 
-    const [array1, setArray1] = useState(array)
+    const [array1] = useState(array)
 
-    const [data, setData] = React.useState(() => [...array])
+    const [data] = React.useState(() => [...array])
     const [columns] = React.useState<typeof defaultColumns>(() => [
         ...defaultColumns,
     ])
@@ -91,7 +88,7 @@ const Array1 = () => {
 
 
 
-    const [itemId, setItemId] = useState<any>()
+ 
     const [{ isDragging }, drag] = useDrag(() => ({
         type: "text",
         item:
@@ -101,7 +98,7 @@ const Array1 = () => {
             isDragging: !!monitor.isDragging(),
         }),
     }));
-    const [{ isOver }, drop] = useDrop(() => ({
+    const [, drop] = useDrop(() => ({
         accept: "text",
         drop: (item: Person) => {
             // console.log(item.id)

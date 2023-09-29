@@ -1,17 +1,18 @@
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import reportBuilderStore from './reportBuilderStore'
+import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+
 
 
 interface DisplayAreChartProps {
     data?: []
+    row?: string[]
+    col?: string[]
 }
 
 
-const DisplayAreaChart = ({ data }: DisplayAreChartProps) => {
+const DisplayAreaChart = ({ data, row, col }: DisplayAreChartProps) => {
 
 
 
-    const { dynamicData } = reportBuilderStore()
     return (
         <>
 
@@ -33,16 +34,35 @@ const DisplayAreaChart = ({ data }: DisplayAreChartProps) => {
 
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
+                    {/* <XAxis
                         //  xAxisId={0} 
                         dataKey="regioncode"
                     // width={300}
-                    />
+                    /> */}
+                    {row?.map((i, index) =>
+                        <XAxis key={index}  dataKey={i} xAxisId={index} />
+                        // {JSON.stringify(i)}
+                    )}
+
                     <YAxis width={105} />
+
                     <Legend iconType='square' />
+
                     <Tooltip />
-                    <Area type="monotone" dataKey="qouta" stackId="1" stroke="#8884d8" fill="#8884d8" />
-                    <Area type="monotone" dataKey="nsTotal" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
+
+                    {/* <Area type="monotone" dataKey="qouta" stackId="1" stroke="#8884d8" fill="#8884d8" />
+                    <Area type="monotone" dataKey="nsTotal" stackId="1" stroke="#82ca9d" fill="#82ca9d" /> */}
+                    {col?.map((i, index) =>
+                        // <XAxis dataKey={i} xAxisId={index} />
+                        <Area type="monotone"
+                            key={index}
+                            dataKey={i}
+                            stackId={index}
+                            stroke={`rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`}
+                            fill={`rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`}
+                        />
+                    )}
+
                     {/* <Area type="monotone" dataKey="amt" stackId="1" stroke="#ffc658" fill="#ffc658" /> */}
                 </AreaChart>
             </ResponsiveContainer>

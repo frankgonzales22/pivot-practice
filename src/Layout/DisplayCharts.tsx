@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { Pie, PieChart, Tooltip } from 'recharts'
-import reportBuilderStore from './reportBuilderStore'
+import  { useEffect, useState } from 'react'
+
 import DisplayBarChart from './DisplayBarChart'
 import DisplayAreaChart from './DisplayAreaChart'
-import { Box, Heading, SimpleGrid, Text } from '@chakra-ui/react'
-import newSaleData from '../newSale'
+import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
+// import newSaleData from '../newSale'
+import DisplayComposedChart from './DisplayComposedChart'
+import DisplayLineChart from './DisplayLineChart'
 
 type Template = {
-    templateTitle : string;
+    templateTitle: string;
     templateId: number;
     chart: string;
     row: string[];
     value: string[];
-    templateData : [];
+    templateData: [];
 };
 
 
@@ -20,46 +21,46 @@ const DisplayCharts = () => {
 
 
 
-    const templates1 = [
-        {
-            templateId: 0,
-            title: 'Template 1',
-            chart: 'barChart',
-            row: ['regioncode'],
-            value: [
-                'quota', 'nsTotal'
-            ],
-            data: []
-        },
+    // const templates1 = [
+    //     {
+    //         templateId: 0,
+    //         title: 'Template 1',
+    //         chart: 'barChart',
+    //         row: ['regioncode'],
+    //         value: [
+    //             'quota', 'nsTotal'
+    //         ],
+    //         data: []
+    //     },
 
-        {
-            templateId: 1,
-            chart: 'areaChart',
-            title: 'Template 2',
-            row: ['territorycode'],
-            value: [
-                'quota', 'nsTotal'
-            ],
-        },
-        {
-            templateId: 3,
-            chart: 'areaChart',
-            title: 'Template 3',
-            row: ['territorycode'],
-            value: [
-                'quota', 'nsTotal'
-            ],
-        },
-        {
-            templateId: 4,
-            chart: 'areaChart',
-            title: 'Template 4',
-            row: ['territorycode'],
-            value: [
-                'quota', 'nsTotal'
-            ],
-        },
-    ]
+    //     {
+    //         templateId: 1,
+    //         chart: 'areaChart',
+    //         title: 'Template 2',
+    //         row: ['territorycode'],
+    //         value: [
+    //             'quota', 'nsTotal'
+    //         ],
+    //     },
+    //     {
+    //         templateId: 3,
+    //         chart: 'areaChart',
+    //         title: 'Template 3',
+    //         row: ['territorycode'],
+    //         value: [
+    //             'quota', 'nsTotal'
+    //         ],
+    //     },
+    //     {
+    //         templateId: 4,
+    //         chart: 'areaChart',
+    //         title: 'Template 4',
+    //         row: ['territorycode'],
+    //         value: [
+    //             'quota', 'nsTotal'
+    //         ],
+    //     },
+    // ]
 
 
     const [templates, setTemplates] = useState<Template[]>([]);
@@ -68,7 +69,7 @@ const DisplayCharts = () => {
     const localStorageKey = 'templatesData';
 
 
- 
+
     // Load data from local storage when the component mounts
     useEffect(() => {
         const storedData = localStorage.getItem(localStorageKey);
@@ -78,20 +79,26 @@ const DisplayCharts = () => {
 
         }
 
-     
+
     }, []);
+    // console.log('display')
+    // console.log(templates)
 
-    console.log(templates)
 
-    const [dynamicData, setData] = React.useState(newSaleData as [])
+    templates.map(i => console.log(i.row.reverse()))
+    // const [dynamicData, setData] = React.useState(newSaleData as [])
     // const { dynamicData } = reportBuilderStore()
 
     function TemplateComponent({ template }: any) {
         switch (template.chart) {
             case 'barChart':
-                return <DisplayBarChart data={template.templateData} />;
+                return <DisplayBarChart data={template.templateData} row={template.row} col={template.value} />;
             case 'areaChart':
-                return <DisplayAreaChart data={template.templateData} />;
+                return <DisplayAreaChart data={template.templateData} row={template.row} col={template.value} />;
+            case 'composedChart':
+                return <DisplayComposedChart data={template.templateData} row={template.row} col={template.value} />;
+            case 'lineChart':
+                return <DisplayLineChart data={template.templateData} row={template.row} col={template.value} />;
             default:
                 return null; // Handle the case where the chart type is unknown
         }
@@ -101,7 +108,7 @@ const DisplayCharts = () => {
 
 
         <>
-        {JSON.stringify(templates)}
+            {/* {JSON.stringify(templates)} */}
             <SimpleGrid
 
                 templateColumns={{
@@ -111,7 +118,7 @@ const DisplayCharts = () => {
 
                 }}
             >
-               
+
                 {templates.map((template) => (
 
 
@@ -130,7 +137,7 @@ const DisplayCharts = () => {
 
                             style={{ color: '#2d8659' }}
                         >{template.templateTitle}</Heading>
-                         {/* {JSON.stringify(template.templateData)} */}
+                        {/* {JSON.stringify(template.templateData)} */}
                         <TemplateComponent template={template} />
                     </Box>
 

@@ -36,7 +36,7 @@ const DnDFirst = () => {
     const [data, setData] = useState<item[]>(PictureList)
     const [board, setBoard] = useState<item[]>([]);
 
-    const [{ isOver }, drop] = useDrop(() => ({
+    const [, drop] = useDrop(() => ({
         accept: "image",
         drop: (item: item) => {
             removeImageFromdata(item.id),

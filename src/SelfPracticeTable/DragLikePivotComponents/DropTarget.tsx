@@ -5,7 +5,7 @@ interface DropTargetProps {
   onDrop: (item: any) => void;
 }
 
-const DropTarget: React.FC<DropTargetProps> = ({ onDrop }) => {
+const DropTarget: React.FC<DropTargetProps> = () => {
   const [droppedItems, setDroppedItems] = useState<any[]>([]);
   const [ord, setOrd] = useState<any[]>([]);
   const [trig, settrig] = useState(false)

@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import dataJSON from '../dataJSON.json'
 const DynamicArray = () => {
-    const [first, setfirst] = useState<string[]>([])
+    const [
+        // first, 
+        ,
+        setfirst] = useState<string[]>([])
     const data = [
         { territorycode: "BT", regioncode: "BT1", },
         { territorycode: "BT", regioncode: "BT2", },

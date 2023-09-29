@@ -9,13 +9,13 @@ import {
     flexRender,
     getCoreRowModel,
     Header,
-    orderColumns,
+
     Table,
     useReactTable,
 } from '@tanstack/react-table'
 import { dataOrder, Person } from './dataOrder'
 
-import { DndProvider, useDrag, useDrop } from 'react-dnd'
+import {  useDrag, useDrop } from 'react-dnd'
 import DraggableItem from '../SelfPracticeTable/DraggableItem'
 
 
@@ -150,7 +150,7 @@ const ColumnOrder = () => {
         debugColumns: true,
     })
 
-    const [{ isDragging }, drag] = useDrag(() => ({  //visibility
+    const [{ isDragging }] = useDrag(() => ({  //visibility
         type: "column",
         item:
             table.getAllLeafColumns().map(column => column.getIsVisible()),
