@@ -1,12 +1,13 @@
+
 {
   "rewrites": [
     {
-      "source": "/(.)",
-      "destination": "/"
+      "source": "/(.*)",      // Match any incoming URL
+      "destination": "/"      // Rewrite it to the root "/"
     },
     {
-      "source": "/(.)",
-      "destination": "DisplayCharts"
+      "source": "/DisplayCharts", // Match incoming URL "/DisplayCharts"
+      "destination": "/DisplayCharts" // Rewrite it to "/DisplayCharts"
     }
   ]
 }
