@@ -2,12 +2,12 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",      // Match any incoming URL
-      "destination": "/"      // Rewrite it to the root "/"
+      "source": "/(.*)",      
+      "destination": "/"     
     },
     {
-      "source": "/DisplayCharts", // Match incoming URL "/DisplayCharts"
-      "destination": "/DisplayCharts" // Rewrite it to "/DisplayCharts"
+      "source": "/DisplayCharts", 
+      "destination": "/DisplayCharts" 
     }
   ]
 }
