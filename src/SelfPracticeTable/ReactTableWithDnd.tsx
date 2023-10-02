@@ -32,6 +32,7 @@ import DisplayBarChart from '../Layout/DisplayBarChart';
 import DisplayAreaChart from '../Layout/DisplayAreaChart';
 import DisplayLineChart from '../Layout/DisplayLineChart';
 import DisplayComposedChart from '../Layout/DisplayComposedChart';
+import NameInputModal from './NameInputModal';
 
 
 
@@ -508,7 +509,7 @@ const ReactTableWithDnd = () => {
 
     // Define the type for your template objects
     type Template = {
-        templateTitle: string;
+        templateTitle: any;
         templateId: number;
         chart: string;
         row: string[];
@@ -546,6 +547,32 @@ const ReactTableWithDnd = () => {
     };
 
     // Function to handle adding a new template
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [name, setName] = useState('');
+
+    const handleSaveName = (newName: string) => {
+        const newTemplate: Template = {
+            templateTitle:
+            newName,
+                // prompt('Enter value')?.split(',') || [],
+            // `Template ${templates.length + 1}`,
+
+            templateId: templates.length, // Use a unique identifier
+            chart: selectedChart, // Customize input fields as needed
+            row: draggedItem,
+            value: droppedItems,
+            templateData: dynamicData!
+        };
+
+        if (newTemplate.chart && newTemplate.row.length > 0 && newTemplate.value.length > 0) {
+            updateTemplates(newTemplate);
+            saveTemplatesToLocalStorage([...templates, newTemplate]);
+            alert('adding template succesful!');
+        } else {
+            alert('Invalid input. Please provide values for chart, row, and value.');
+        }
+      };
+    
     const handleAddTemplate = () => {
         // Create a new template object based on user input (customize this part)
         // const newTemplate: Template = {
@@ -556,7 +583,11 @@ const ReactTableWithDnd = () => {
         // };
 
         const newTemplate: Template = {
-            templateTitle: `Template ${templates.length + 1}`,
+            templateTitle:
+            name,
+                // prompt('Enter value')?.split(',') || [],
+            // `Template ${templates.length + 1}`,
+
             templateId: templates.length, // Use a unique identifier
             chart: selectedChart, // Customize input fields as needed
             row: draggedItem,
@@ -572,6 +603,8 @@ const ReactTableWithDnd = () => {
             alert('Invalid input. Please provide values for chart, row, and value.');
         }
     }
+
+
 
     return (
 
@@ -916,8 +949,17 @@ const ReactTableWithDnd = () => {
                     <option value='composedChart'>Composed Chart</option>
                     {/* <option value='option3'></option> */}
                 </Select>
-                <Button colorScheme='teal' width={'200px'} onClick={handleAddTemplate}>Save</Button>
+                <Button colorScheme='teal' width={'200px'} 
+                // onClick={handleAddTemplate}
+                onClick={() => (setIsModalOpen(!isModalOpen))}
+                >Save</Button>
             </Box>
+            {/* <Button onClick={() => (setIsModalOpen(!isModalOpen))} >Open Modal</Button> */}
+            <NameInputModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSave={handleSaveName}
+            />
 
             {selectedChart &&
                 <Box
