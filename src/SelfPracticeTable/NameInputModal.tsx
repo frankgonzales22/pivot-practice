@@ -29,7 +29,7 @@ const NameInputModal: React.FC<NameInputModalProps> = ({ isOpen, onClose, onSave
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Enter Your Template Name</ModalHeader>
+        <ModalHeader>Enter Your Template's Name</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Input
