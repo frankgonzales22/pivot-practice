@@ -74,7 +74,7 @@ const ReactTableWithDnd = () => {
                 // sortingFn : 'text',
                 // sortDescFirst : false,
                 // enableSorting : true,
-                header: () => <div>REGION CODE</div>,
+                header: () => <div >REGION CODE</div>,
                 aggregationFn: 'count',
 
             },
@@ -93,21 +93,39 @@ const ReactTableWithDnd = () => {
                     textAlign: "right"
                 }}>NS COLLECTION</div>,
                 aggregatedCell: ({ getValue }) =>
-                    <div style={{
-                        textAlign: "right"
-                    }}> {getValue<number>().toLocaleString()} </div>,
+                    <div
+                        style={{
+                            textAlign: "right"
+                        }}
+                    > {getValue<number>().toLocaleString()} </div>,
+                cell: ({ getValue }) =>
+                    <div
+                        style={{
+                            textAlign: "right"
+                        }}
+                    >{getValue<number>().toLocaleString()}</div>,
                 aggregationFn: 'sum',
             },
             {
                 accessorKey: 'nsRegular',
                 id: 'NS REGULAR',
-                header: () => <div style={{
-                    textAlign: "right"
-                }}>NS REGULAR</div>,
-                aggregatedCell: ({ getValue }) =>
-                    <div style={{
+                header: () => <div
+                    style={{
                         textAlign: "right"
-                    }}> {getValue<number>().toLocaleString()} </div>,
+                    }}
+                >NS REGULAR</div>,
+                aggregatedCell: ({ getValue }) =>
+                    <div
+                        style={{
+                            textAlign: "right"
+                        }}
+                    > {getValue<number>().toLocaleString()} </div>,
+                cell: ({ getValue }) =>
+                    <div
+                        style={{
+                            textAlign: "right"
+                        }}
+                    >{getValue<number>().toLocaleString()}</div>,
                 aggregationFn:
 
                     'min',
@@ -117,24 +135,44 @@ const ReactTableWithDnd = () => {
                 accessorKey: 'nsTotal',
                 id: 'NS TOTAL',
                 aggregationFn: 'sum',
-                header: () => <div style={{
-                    textAlign: "right"
-                }}>NS TOTAL</div>,
-                aggregatedCell: ({ getValue }) =>
-                    <div style={{
+                header: () => <div
+                    style={{
                         textAlign: "right"
-                    }}> {getValue<number>().toLocaleString()} </div>,
+                    }}
+                >NS TOTAL</div>,
+                aggregatedCell: ({ getValue }) =>
+                    <div
+                        style={{
+                            textAlign: "right"
+                        }}
+                    > {getValue<number>().toLocaleString()} </div>,
+                cell: ({ getValue }) =>
+                    <div
+                        style={{
+                            textAlign: "right"
+                        }}
+                    >{getValue<number>().toLocaleString()}</div>,
             },
             {
                 accessorKey: 'qouta',
-                header: () => <div style={{
-                    textAlign: "right"
-                }}>QOUTA</div>,
+                header: () => <div
+                    style={{
+                        textAlign: "right"
+                    }}
+                >QOUTA</div>,
                 id: 'QOUTA',
                 aggregatedCell: ({ getValue }) =>
-                    <div style={{
-                        textAlign: "right"
-                    }}> {getValue<number>().toLocaleString()} </div>,
+                    <div
+                        style={{
+                            textAlign: "right"
+                        }}
+                    > {getValue<number>().toLocaleString()} </div>,
+                cell: ({ getValue }) =>
+                    <div
+                        style={{
+                            textAlign: "right"
+                        }}
+                    >{getValue<number>().toLocaleString()}</div>,
                 aggregationFn: 'sum',
                 // sortingFn: 'basic',
                 // sortDescFirst: true,
@@ -149,15 +187,25 @@ const ReactTableWithDnd = () => {
             },
             {
                 accessorKey: 'nsEstore',
-                header: () => <div style={{
-                    textAlign: "right"
-                }}>NS ESTORE</div>,
+                header: () => <div
+                    style={{
+                        textAlign: "right"
+                    }}
+                >NS ESTORE</div>,
                 id: 'NS ESTORE',
                 aggregationFn: 'count',
                 aggregatedCell: ({ getValue }) =>
-                    <div style={{
-                        textAlign: "right"
-                    }}>{getValue<number>().toLocaleString()}</div>,
+                    <div
+                        style={{
+                            textAlign: "right"
+                        }}
+                    >{getValue<number>().toLocaleString()}</div>,
+                cell: ({ getValue }) =>
+                    <div
+                        style={{
+                            textAlign: "right"
+                        }}
+                    >{getValue<number>().toLocaleString()}</div>,
 
                 // enableSorting : true,
                 // sortingFn: 'basic',  
@@ -548,9 +596,9 @@ const ReactTableWithDnd = () => {
                                         return (
                                             <Th key={header.id} colSpan={header.colSpan} fontWeight={'bold'} color={'black'} fontSize={'md'}
                                             //  marginX={'15px'} 
-                                             	>
+                                            >
                                                 {header.isPlaceholder ? null : (
-                                                    <div className='headerNoWrap' 
+                                                    <div className='headerNoWrap'
                                                     // style={{ margin: '10px 10px' }}
                                                     >
                                                         {header.column.getCanGroup() ? (
@@ -597,6 +645,9 @@ const ReactTableWithDnd = () => {
                                                 map(cell => {
                                                     return (
                                                         <Td
+                                                            // style={{
+                                                            //     textAlign: "right"
+                                                            // }}
                                                             // textAlign={'right'}
                                                             {...{
                                                                 key: cell.id,
@@ -617,9 +668,11 @@ const ReactTableWithDnd = () => {
                                                                 // If it's a grouped cell, add an expander and row count
                                                                 <>
                                                                     <button
+
                                                                         {...{
                                                                             onClick: row.getToggleExpandedHandler(),
                                                                             style: {
+                                                                                fontWeight: 'bold',
                                                                                 cursor: row.getCanExpand()
                                                                                     ? 'pointer'
                                                                                     : 'normal',
@@ -628,6 +681,7 @@ const ReactTableWithDnd = () => {
                                                                     >
                                                                         {/* {JSON.stringify(row)} */}
                                                                         {row.getIsExpanded() ?
+
                                                                             '🡫'
                                                                             :
                                                                             '🡪'
