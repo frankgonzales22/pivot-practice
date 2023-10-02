@@ -567,9 +567,9 @@ const ReactTableWithDnd = () => {
         if (newTemplate.chart && newTemplate.row.length > 0 && newTemplate.value.length > 0) {
             updateTemplates(newTemplate);
             saveTemplatesToLocalStorage([...templates, newTemplate]);
-            alert('adding template succesful!');
+            alert('Adding template successful!');
         } else {
-            alert('Invalid input. Please provide values for chart, row, and value.');
+            alert('Invalid input. Please provide values, row and template name.');
         }
       };
     
