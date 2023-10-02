@@ -869,7 +869,7 @@ const ReactTableWithDnd = () => {
                 <Box
                     style={{
                         marginLeft: '20px',
-                        width: '1350px',
+                        width: '1300px',
                         height: '350px'
                     }}
                 >
