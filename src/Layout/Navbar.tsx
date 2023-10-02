@@ -52,8 +52,10 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-    { name: 'Home', icon: FiHome, path: '/' },
+    { name: 'Home', icon: FiTrendingUp,   path: 'https://osp-rms-web-ukx4.vercel.app' },
+    { name: 'Build Reports', icon: FiHome, path: '/' },
     { name: 'My Templates', icon: FiTrendingUp,   path: '/DisplayCharts' },
+
     // { name: 'Explore', icon: FiCompass },
     // { name: 'Favourites', icon: FiStar },
     // { name: 'Settings', icon: FiSettings },
