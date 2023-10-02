@@ -25,6 +25,8 @@ const DisplayLineChart = ({ data, row, col }: DisplayLineChartProps) => {
                 maximumFractionDigits: 2,
             });
             return `${millionValue}K`;
+        }else {
+            return `${value}`
         }
 
     };
