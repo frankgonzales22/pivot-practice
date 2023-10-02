@@ -24,6 +24,8 @@ const DisplayAreaChart = ({ data, row, col }: DisplayAreChartProps) => {
                 maximumFractionDigits: 2,
             });
             return `${millionValue}K`;
+        }else {
+            return `${value}`
         }
         // if (value >= 1_000_000) {
         //     // Convert to millions and format with 2 decimal places
