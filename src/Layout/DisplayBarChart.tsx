@@ -27,6 +27,8 @@ const DisplayBarChart = ({ data, row, col }: DisplayBarChartProps) => {
                 maximumFractionDigits: 2,
             });
             return `${millionValue}K`;
+        }else {
+            return `${value}`
         }
 
     };
