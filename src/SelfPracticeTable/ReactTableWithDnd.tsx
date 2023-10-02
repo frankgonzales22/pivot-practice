@@ -548,7 +548,7 @@ const ReactTableWithDnd = () => {
 
     // Function to handle adding a new template
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [name, setName] = useState('');
+  
 
     const handleSaveName = (newName: string) => {
         const newTemplate: Template = {
@@ -573,36 +573,36 @@ const ReactTableWithDnd = () => {
         }
       };
     
-    const handleAddTemplate = () => {
-        // Create a new template object based on user input (customize this part)
-        // const newTemplate: Template = {
-        //     templateId: templates.length, // Use a unique identifier
-        //     chart: prompt('Enter chart type') || 'barChart', // Customize input fields as needed
-        //     row: prompt('Enter row')?.split(',') || [],
-        //     value: prompt('Enter value')?.split(',') || [],
-        // };
+    // const handleAddTemplate = () => {
+    //     // Create a new template object based on user input (customize this part)
+    //     // const newTemplate: Template = {
+    //     //     templateId: templates.length, // Use a unique identifier
+    //     //     chart: prompt('Enter chart type') || 'barChart', // Customize input fields as needed
+    //     //     row: prompt('Enter row')?.split(',') || [],
+    //     //     value: prompt('Enter value')?.split(',') || [],
+    //     // };
 
-        const newTemplate: Template = {
-            templateTitle:
-            name,
-                // prompt('Enter value')?.split(',') || [],
-            // `Template ${templates.length + 1}`,
+    //     const newTemplate: Template = {
+    //         templateTitle:
+    //         name,
+    //             // prompt('Enter value')?.split(',') || [],
+    //         // `Template ${templates.length + 1}`,
 
-            templateId: templates.length, // Use a unique identifier
-            chart: selectedChart, // Customize input fields as needed
-            row: draggedItem,
-            value: droppedItems,
-            templateData: dynamicData!
-        };
+    //         templateId: templates.length, // Use a unique identifier
+    //         chart: selectedChart, // Customize input fields as needed
+    //         row: draggedItem,
+    //         value: droppedItems,
+    //         templateData: dynamicData!
+    //     };
 
-        if (newTemplate.chart && newTemplate.row.length > 0 && newTemplate.value.length > 0) {
-            updateTemplates(newTemplate);
-            saveTemplatesToLocalStorage([...templates, newTemplate]);
-            alert('adding template succesful!');
-        } else {
-            alert('Invalid input. Please provide values for chart, row, and value.');
-        }
-    }
+    //     if (newTemplate.chart && newTemplate.row.length > 0 && newTemplate.value.length > 0) {
+    //         updateTemplates(newTemplate);
+    //         saveTemplatesToLocalStorage([...templates, newTemplate]);
+    //         alert('adding template succesful!');
+    //     } else {
+    //         alert('Invalid input. Please provide values for chart, row, and value.');
+    //     }
+    // }
 
 
 
