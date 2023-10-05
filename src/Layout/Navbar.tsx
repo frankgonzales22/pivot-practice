@@ -21,13 +21,16 @@ import {
     MenuDivider,
     MenuItem,
     MenuList,
-    Image} from '@chakra-ui/react'
+    Image
+} from '@chakra-ui/react'
+
 import {
     FiHome,
     FiTrendingUp,
     FiMenu,
     FiBell,
     FiChevronDown,
+
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { Link as ReactRouterLink } from 'react-router-dom'
@@ -222,9 +225,11 @@ const Main = () => {
                 onOverlayClick={onClose}
                 size="full"
             >
+
                 <DrawerContent>
                     <SidebarContent onClose={onClose} />
                 </DrawerContent>
+                
             </Drawer>
             {/* mobilenav */}
             <MobileNav onOpen={onOpen} />
