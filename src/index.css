@@ -7,12 +7,14 @@
 
 
 .ReactTable {
-  width: 1150px;
+  /* width: 1150px; */
   /* overflow-x: auto; */
   display: block;
   border-collapse: collapse;
   margin-left: 40px;
   margin-top: 20px;
+  z-index: -200;
+
 }
 
 .headerNoWrap {
@@ -20,7 +22,8 @@
 }
 
 .main-table-wrapper {
-  margin: 10px 20px 0px 260px;
+  /* margin: 10px 20px 0px 0px; */
+ 
 }
 
 .table-fields-wrapper {
