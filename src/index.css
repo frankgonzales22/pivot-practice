@@ -6,7 +6,7 @@
 }
 
 
-.ReactTable { 
+.ReactTable {
   width: 1150px;
   /* overflow-x: auto; */
   display: block;
@@ -15,10 +15,20 @@
   margin-top: 20px;
 }
 
- .headerNoWrap {
+.headerNoWrap {
   text-wrap: nowrap;
- }
- 
+}
+
+.main-table-wrapper {
+  margin: 10px 20px 0px 260px;
+}
+
+.table-fields-wrapper {
+  /* background-color: blue; */
+  /* right: 0; */
+  max-height: 785px;
+
+}
 
 
 /* 

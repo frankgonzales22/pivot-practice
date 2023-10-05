@@ -548,13 +548,13 @@ const ReactTableWithDnd = () => {
 
     // Function to handle adding a new template
     const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
 
     const handleSaveName = (newName: string) => {
         const newTemplate: Template = {
             templateTitle:
-            newName,
-                // prompt('Enter value')?.split(',') || [],
+                newName,
+            // prompt('Enter value')?.split(',') || [],
             // `Template ${templates.length + 1}`,
 
             templateId: templates.length, // Use a unique identifier
@@ -571,8 +571,8 @@ const ReactTableWithDnd = () => {
         } else {
             alert('Invalid input. Please provide values, row and template name.');
         }
-      };
-    
+    };
+
     // const handleAddTemplate = () => {
     //     // Create a new template object based on user input (customize this part)
     //     // const newTemplate: Template = {
@@ -609,379 +609,386 @@ const ReactTableWithDnd = () => {
     return (
 
         <>
-            {/* {JSON.stringify(draggedItem)} */}
-            {/* {JSON.stringify(table.getVisibleLeafColumns())} */}
+            <SimpleGrid
+                className='main-table-wrapper'
+                // columns={{
+                //     base: 1,
+                //     lg: 2
 
-            <div className="p-2 ReactTable">
-                <Box
-                    shadow="xl"
-                    borderWidth="1px"
-                    h={400}
-                    overflowX="auto"
+                // }}
+                templateColumns={{
+                    sm: '1fr',
+                    lg: '1fr 350px'
+                }}
+                gap={5}
+
+            >
+                <Box className="p-2 ReactTable"
+                // width={'1fr'}
+                // maxWidth={'1350px'}
+                // minWidth={'200'}
                 >
-                    {/* {JSON.stringify(expanded)} */}
-                    {/* <button onClick={() => setExpand({'TERRITORY CODE:BT' : true})}>set expand</button> */}
-                    <Table variant="striped" colorScheme="teal">
-                        <Thead position="sticky" top={0} zIndex="sticky" bgColor="white">
-                            {table.getHeaderGroups().map(headerGroup => (
-                                <tr key={headerGroup.id}>
-                                    {headerGroup.headers.map(header => {
-                                        return (
-                                            <Th key={header.id} colSpan={header.colSpan} fontWeight={'bold'} color={'black'} fontSize={'md'}
-                                            //  marginX={'15px'} 
-                                            >
-                                                {header.isPlaceholder ? null : (
-                                                    <div className='headerNoWrap'
-                                                    // style={{ margin: '10px 10px' }}
-                                                    >
-                                                        {header.column.getCanGroup() ? (
-                                                            // If the header can be grouped, let's add a toggle
-                                                            <button
-                                                                {...{
-                                                                    onClick: header.column.getToggleGroupingHandler(),
-                                                                    style: {
-                                                                        cursor: 'pointer',
-                                                                    },
-                                                                }}
-                                                            >
-                                                                {/* {header.column.getIsGrouped()
+                    <Box width={'400px'} padding={'10px 40px'} display={'flex'} gap={'30px'}>
+                        <Select placeholder='Choose charts' cursor={'pointer'} onChange={(e) => setSelectedChart(e.target.value)}>
+                            <option value='barChart' style={{ cursor: 'pointer' }} >Bar Chart</option>
+                            <option value='areaChart'>Area Chart</option>
+                            <option value='lineChart'>Line Chart</option>
+                            <option value='composedChart'>Composed Chart</option>
+                            {/* <option value='option3'></option> */}
+                        </Select>
+                        <Button colorScheme='teal' width={'200px'}
+
+                            onClick={() => (setIsModalOpen(!isModalOpen))}
+                        >Save</Button>
+                    </Box>
+                    <NameInputModal
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        onSave={handleSaveName}
+                    />
+
+                    <Box
+                        shadow="xl"
+                        borderWidth="1px"
+                        h={400}
+                        overflowX="auto"
+                    >
+                        {/* {JSON.stringify(expanded)} */}
+                        {/* <button onClick={() => setExpand({'TERRITORY CODE:BT' : true})}>set expand</button> */}
+                        <Table variant="striped" colorScheme="teal">
+                            {/* //#region HEADER */}
+                            <Thead position="sticky" top={0} zIndex="sticky" bgColor="white">
+                                {table.getHeaderGroups().map(headerGroup => (
+                                    <tr key={headerGroup.id}>
+                                        {headerGroup.headers.map(header => {
+                                            return (
+                                                <Th key={header.id} colSpan={header.colSpan} fontWeight={'bold'} color={'black'} fontSize={'md'}
+                                                //  marginX={'15px'} 
+                                                >
+                                                    {header.isPlaceholder ? null : (
+                                                        <div className='headerNoWrap'
+                                                        // style={{ margin: '10px 10px' }}
+                                                        >
+                                                            {header.column.getCanGroup() ? (
+                                                                // If the header can be grouped, let's add a toggle
+                                                                <button
+                                                                    {...{
+                                                                        onClick: header.column.getToggleGroupingHandler(),
+                                                                        style: {
+                                                                            cursor: 'pointer',
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    {/* {header.column.getIsGrouped()
 
                                                                 ? `🛑(${header.column.getGroupedIndex()}) `
                                                                 : `🟰 `} */}
-                                                            </button>
-                                                        ) : null}{' '}
+                                                                </button>
+                                                            ) : null}{' '}
 
-                                                        {flexRender(
-                                                            header.column.columnDef.header,
-                                                            header.getContext()
-                                                        )}
+                                                            {flexRender(
+                                                                header.column.columnDef.header,
+                                                                header.getContext()
+                                                            )}
 
-                                                    </div>
-                                                )}
-                                            </Th>
+                                                        </div>
+                                                    )}
+                                                </Th>
+                                            )
+                                        })}
+                                    </tr>
+                                ))}
+                            </Thead>
+                            {/* //#endregion HEADER */}
+
+                            {/* #region BODY */}
+                            <Tbody >
+
+                                {table.
+                                    getRowModel().
+                                    rows.map(row => {
+                                        return (
+                                            <Tr key={row.id}>
+                                                {row.
+
+                                                    getVisibleCells().
+                                                    map(cell => {
+                                                        return (
+                                                            <Td
+                                                                {...{
+                                                                    key: cell.id,
+
+                                                                }}
+                                                            >
+                                                                {cell.getIsGrouped() ? (
+                                                                    // If it's a grouped cell, add an expander and row count
+                                                                    <>
+                                                                        <button
+
+                                                                            {...{
+                                                                                onClick: row.getToggleExpandedHandler(),
+                                                                                style: {
+                                                                                    fontWeight: 'bold',
+                                                                                    cursor: row.getCanExpand()
+                                                                                        ? 'pointer'
+                                                                                        : 'normal',
+                                                                                },
+                                                                            }}
+                                                                        >
+                                                                            {row.getIsExpanded() ?
+
+                                                                                '🡫'
+                                                                                :
+                                                                                '🡪'
+                                                                            }{' '}
+                                                                            {flexRender(
+                                                                                cell.column.columnDef.cell,
+                                                                                cell.getContext(),
+                                                                            )}{' '}
+                                                                        </button>
+                                                                    </>
+                                                                ) : cell.getIsAggregated() ? (
+                                                                    // If the cell is aggregated, use the Aggregated
+                                                                    // renderer for cell
+                                                                    flexRender(
+                                                                        cell.column.columnDef.aggregatedCell ??
+                                                                        cell.column.columnDef.cell,
+                                                                        cell.getContext(),
+                                                                    )
+                                                                ) : cell.getIsPlaceholder() ? null : ( // For cells with repeated values, render null
+                                                                    // Otherwise, just render the regular cell
+                                                                    flexRender(
+                                                                        cell.column.columnDef.cell,
+                                                                        cell.getContext(),
+                                                                    )
+                                                                )}
+                                                            </Td>
+                                                        )
+                                                    })}
+                                            </Tr>
                                         )
                                     })}
-                                </tr>
-                            ))}
-                        </Thead>
 
-                        <Tbody >
+                            </Tbody>
+                            {/* #endregion BODY */}
 
-                            {table.
-                                getRowModel().
-                                rows.map(row => {
-                                    return (
-                                        <Tr key={row.id}>
-                                            {row.
+                            {/* </tbody> */}
+                        </Table>
+                    </Box>
 
-                                                getVisibleCells().
-                                                map(cell => {
-                                                    return (
-                                                        <Td
-                                                            // style={{
-                                                            //     textAlign: "right"
-                                                            // }}
-                                                            // textAlign={'right'}
-                                                            {...{
-                                                                key: cell.id,
-                                                                // style: {
-
-                                                                //     background: cell.getIsGrouped()
-                                                                //         ? '#0aff0082'
-                                                                //         : cell.getIsAggregated()
-                                                                //             ? '#ffa50078'
-                                                                //             : cell.getIsPlaceholder()
-                                                                //                 ? '#ff000042'
-                                                                //                 : 'gray',
-                                                                // },
-                                                            }}
-                                                        >
-
-                                                            {cell.getIsGrouped() ? (
-                                                                // If it's a grouped cell, add an expander and row count
-                                                                <>
-                                                                    <button
-
-                                                                        {...{
-                                                                            onClick: row.getToggleExpandedHandler(),
-                                                                            style: {
-                                                                                fontWeight: 'bold',
-                                                                                cursor: row.getCanExpand()
-                                                                                    ? 'pointer'
-                                                                                    : 'normal',
-                                                                            },
-                                                                        }}
-                                                                    >
-                                                                        {/* {JSON.stringify(row)} */}
-                                                                        {row.getIsExpanded() ?
-
-                                                                            '🡫'
-                                                                            :
-                                                                            '🡪'
-                                                                        }{' '}
-                                                                        {flexRender(
-                                                                            cell.column.columnDef.cell,
-                                                                            cell.getContext(),
-                                                                        )}{' '}
-                                                                        {/* ({row.subRows.length}) */}
-                                                                    </button>
-                                                                </>
-                                                            ) : cell.getIsAggregated() ? (
-                                                                // If the cell is aggregated, use the Aggregated
-                                                                // renderer for cell
-                                                                flexRender(
-                                                                    cell.column.columnDef.aggregatedCell ??
-                                                                    cell.column.columnDef.cell,
-                                                                    cell.getContext(),
-                                                                )
-                                                            ) : cell.getIsPlaceholder() ? null : ( // For cells with repeated values, render null
-                                                                // Otherwise, just render the regular cell
-                                                                flexRender(
-                                                                    cell.column.columnDef.cell,
-                                                                    cell.getContext(),
-                                                                )
-                                                            )}
-                                                        </Td>
-                                                    )
-                                                })}
-                                        </Tr>
-                                    )
-                                })}
-
-                        </Tbody>
-
-                        {/* </tbody> */}
-                    </Table>
-                </Box>
-
-                {/* <pre>{JSON.stringify(table.getState().columnOrder, null, 2)}</pre> */}
-            </div >
+                    {selectedChart &&
+                        <Box
+                            // style={{
+                            //     // marginLeft: '20px',
+                            //     width: '1300px',
+                            //     height: '350px',
+                            //     marginTop = {{
+                            //         base : 0,
+                            //         sm : 250px,
+                            //     }}
+                            // }}
+                            style={{
+                                // width: '1200px',
+                                height: '330px',
+                                // marginTop,
+                                marginTop: '50px'
 
 
-            <Box style={{
-                width: '350px',
-                position: 'fixed',
-                right: '10px',
-                top: '100px'
+                            }}
 
-            }}
-                shadow="xl"
-                borderWidth="1px"
-            >
-                <Heading style={{ padding: '10px', color: '#2d8659' }} colorScheme='green'>Table Fields</Heading>
-                <Text style={{ padding: '5px 10px' }}>Choose fields to add to report : </Text>
+                        >
+                            {selectedChart === 'barChart' && <DisplayBarChart data={dynamicData} row={draggedItem} col={droppedItems} />}
+                            {selectedChart === 'areaChart' && <DisplayAreaChart data={dynamicData} row={draggedItem} col={droppedItems} />}
+                            {selectedChart === 'lineChart' && <DisplayLineChart data={dynamicData} row={draggedItem} col={droppedItems} />}
+                            {selectedChart === 'composedChart' && <DisplayComposedChart data={dynamicData} row={draggedItem} col={droppedItems} />}
+                        </Box>
+                    }
+
+                </Box >
+
+
                 <Box
-                    style={{
-                        height: '280px',
-                        padding: '10px',
-                        overflowY: 'auto',
-                        marginBottom: '5px',
-                        margin: '3px'
+                    className='table-fields-wrapper'
+                    // style={{
+
+                    //     width: '350px',
+                    //     // position: 'fixed',
+                    //     // right: '10px',
+                    //     // top: '100px'
+
+                    // }}
+
+                    marginX={{
+                        sm: '70px',
+                        lg: '0'
+                    }}
+                    w={{
+                        sm: '500px',
+                        lg: '350px'
                     }}
                     shadow="xl"
                     borderWidth="1px"
+
                 >
-                    {/* <div className="px-1 border-b border-gray">
-                        <label>
-                            <input
-                                {...{
-                                    type: 'checkbox',
-                                    checked: table.getIsAllColumnsVisible(),
-                                    onChange: table.getToggleAllColumnsVisibilityHandler(),
-                                }}
-                            />{' '}
-                            Toggle All
-                        </label>
-                    </div> */}
-                    {table.getAllLeafColumns().map(column => {
-                        return (
-                            <div key={column.id} >
-                                <div className="px-1"
-                                >
-                                    <label
-                                        style={{ display: 'inline-flex', fontSize: '12px', cursor: 'pointer' }}
+
+                    <Heading style={{ padding: '10px', color: '#2d8659' }} colorScheme='green'>Table Fields</Heading>
+                    <Text style={{ padding: '5px 10px' }}>Choose fields to add to report : </Text>
+                    <Box
+                        style={{
+                            height: '280px',
+                            padding: '10px',
+                            overflowY: 'auto',
+                            marginBottom: '5px',
+                            margin: '3px'
+                        }}
+                        shadow="xl"
+                        borderWidth="1px"
+                    >
+
+                        {table.getAllLeafColumns().map(column => {
+                            return (
+                                <div key={column.id} >
+                                    <div className="px-1"
                                     >
-                                        {/* <input
-
-                                            style={{ margin: '3px' }}
-                                            {...{
-                                                type: 'checkbox',
-
-                                                checked: column.getIsVisible(),
-
-                                                onChange: column.getToggleVisibilityHandler()
-                                            }}
-                                        /> */}
-                                        <DraggingItem key={column.id} id={column.id} name={column.id} />
-                                    </label>
+                                        <label
+                                            style={{ display: 'inline-flex', fontSize: '12px', cursor: 'pointer' }}
+                                        >
+                                            <DraggingItem key={column.id} id={column.id} name={column.id} />
+                                        </label>
+                                    </div>
                                 </div>
-                                {/* {JSON.stringify(column.id)} */}
-                            </div>
-                        )
-                    })}
-                </Box>
+                            )
+                        })}
+                    </Box>
 
-                {/* //////*********** /===========  DROP AREA ===========*/}
-                <div>
-                    <SimpleGrid columns={2} spacingX='10px' spacingY='10px' padding={1} >
-                        <Box
-                            // border="1px solid gray"
-                            shadow="md"
-                            borderWidth="1px"
-                            fontSize={'12px'}>
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                paddingLeft: '5px',
-                                paddingTop: '5px',
-                                fontSize: '13px'
-                            }}>
-                                <MdOutlineFilterList />
-                                <span style={{ paddingLeft: '5px' }}>Filter </span>
-                            </div>
+                    {/* //#region  ======  DROP AREA ===========*/}
+
+                    <div>
+                        <SimpleGrid columns={2} spacingX='10px' spacingY='10px' padding={1} >
                             <Box
-                                style={{
-                                    overflow: 'auto',
-                                    height: '163px',
-                                    backgroundColor: 'whitesmoke'
-                                }}
-                            >
-
-                            </Box>
-                        </Box>
-                        <Box
-                            shadow="md"
-                            borderWidth="1px"
-                            fontSize={'12px'}>
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                paddingLeft: '5px',
-                                paddingTop: '5px',
-                                fontSize: '13px'
-                            }}>
-                                <MdOutlineViewColumn />
-                                <span style={{ paddingLeft: '5px' }}>Column </span>
-                            </div>
-                            <Box
-                                style={{
-                                    overflow: 'auto',
-                                    height: '163px',
-                                    backgroundColor: 'whitesmoke'
-                                }}
-                            >
-
-                            </Box>
-                        </Box>
-                        <Box
-                            shadow="md"
-                            borderWidth="1px"
-                            border={isOver ? "1px solid black" :
-                                ""}
-                            bg=''
-                            // height='190px' 
-                            ref={drop}
-                            fontSize={'12px'} >
-                            <div
-                                style={{
+                                // border="1px solid gray"
+                                shadow="md"
+                                borderWidth="1px"
+                                fontSize={'12px'}>
+                                <div style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     paddingLeft: '5px',
                                     paddingTop: '5px',
                                     fontSize: '13px'
-
                                 }}>
-                                <MdOutlineTableRows />
-                                <span style={{ paddingLeft: '5px' }}>Rows </span>
-                            </div>
+                                    <MdOutlineFilterList />
+                                    <span style={{ paddingLeft: '5px' }}>Filter </span>
+                                </div>
+                                <Box
+                                    style={{
+                                        overflow: 'auto',
+                                        height: '163px',
+                                        backgroundColor: 'whitesmoke'
+                                    }}
+                                >
 
-                            <Box
-                                style={{
-                                    overflow: 'auto',
-                                    height: '163px',
-                                    backgroundColor: 'whitesmoke'
-                                }}
-                            >
-                                <DraggedItem item={draggedItem} />
+                                </Box>
                             </Box>
-                        </Box>
-                        <Box
-
-                            shadow="md"
-                            borderWidth="1px"
-                            border={isHover ? "1px solid black" :
-                                ""}
-                            bg=''
-                            ref={ref}
-                            fontSize={'12px'}>
-                            <div
-                                style={{
+                            <Box
+                                shadow="md"
+                                borderWidth="1px"
+                                fontSize={'12px'}>
+                                <div style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     paddingLeft: '5px',
                                     paddingTop: '5px',
-                                    fontSize: '13px',
-                                    overflow: 'auto'
+                                    fontSize: '13px'
                                 }}>
-                                <TbSum />
-                                <span style={{ paddingLeft: '5px' }}>Values</span>
-                            </div>
-                            <Box
-                                style={{
-                                    overflow: 'auto',
-                                    height: '163px',
-                                    backgroundColor: 'whitesmoke'
-                                }}
-                            >
-                                {/* <DropTarget onDrop={handleDrop} /> */}
-                                <DraggedItem item={droppedItems} />
+                                    <MdOutlineViewColumn />
+                                    <span style={{ paddingLeft: '5px' }}>Column </span>
+                                </div>
+                                <Box
+                                    style={{
+                                        overflow: 'auto',
+                                        height: '163px',
+                                        backgroundColor: 'whitesmoke'
+                                    }}
+                                >
+
+                                </Box>
                             </Box>
+                            <Box
+                                shadow="md"
+                                borderWidth="1px"
+                                border={isOver ? "1px solid black" :
+                                    ""}
+                                bg=''
+                                // height='190px' 
+                                ref={drop}
+                                fontSize={'12px'} >
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        paddingLeft: '5px',
+                                        paddingTop: '5px',
+                                        fontSize: '13px'
 
-                        </Box>
-                    </SimpleGrid>
-                </div>
-            </Box >
-            <Box width={'400px'} padding={'10px 40px'} display={'flex'} gap={'30px'}>
-                <Select placeholder='Choose charts' cursor={'pointer'} onChange={(e) => setSelectedChart(e.target.value)}>
-                    <option value='barChart' style={{ cursor: 'pointer' }} >Bar Chart</option>
-                    <option value='areaChart'>Area Chart</option>
-                    <option value='lineChart'>Line Chart</option>
-                    <option value='composedChart'>Composed Chart</option>
-                    {/* <option value='option3'></option> */}
-                </Select>
-                <Button colorScheme='teal' width={'200px'} 
-                // onClick={handleAddTemplate}
-                onClick={() => (setIsModalOpen(!isModalOpen))}
-                >Save</Button>
-            </Box>
-            {/* <Button onClick={() => (setIsModalOpen(!isModalOpen))} >Open Modal</Button> */}
-            <NameInputModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onSave={handleSaveName}
-            />
+                                    }}>
+                                    <MdOutlineTableRows />
+                                    <span style={{ paddingLeft: '5px' }}>Rows </span>
+                                </div>
 
-            {selectedChart &&
-                <Box
-                    style={{
-                        marginLeft: '20px',
-                        width: '1300px',
-                        height: '350px'
-                    }}
-                >
-                    {selectedChart === 'barChart' && <DisplayBarChart data={dynamicData} row={draggedItem} col={droppedItems} />}
-                    {selectedChart === 'areaChart' && <DisplayAreaChart data={dynamicData} row={draggedItem} col={droppedItems} />}
-                    {selectedChart === 'lineChart' && <DisplayLineChart data={dynamicData} row={draggedItem} col={droppedItems} />}
-                    {selectedChart === 'composedChart' && <DisplayComposedChart data={dynamicData} row={draggedItem} col={droppedItems} />}
-                </Box>
-            }
+                                <Box
+                                    style={{
+                                        overflow: 'auto',
+                                        height: '163px',
+                                        backgroundColor: 'whitesmoke'
+                                    }}
+                                >
+                                    <DraggedItem item={draggedItem} />
+                                </Box>
+                            </Box>
+                            <Box
+                                shadow="md"
+                                borderWidth="1px"
+                                border={isHover ? "1px solid black" :
+                                    ""}
+                                bg=''
+                                ref={ref}
+                                fontSize={'12px'}>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        paddingLeft: '5px',
+                                        paddingTop: '5px',
+                                        fontSize: '13px',
+                                        overflow: 'auto'
+                                    }}>
+                                    <TbSum />
+                                    <span style={{ paddingLeft: '5px' }}>Values</span>
+                                </div>
+                                <Box
+                                    style={{
+                                        overflow: 'auto',
+                                        height: '163px',
+                                        backgroundColor: 'whitesmoke'
+                                    }}
+                                >
+                                    {/* <DropTarget onDrop={handleDrop} /> */}
+                                    <DraggedItem item={droppedItems} />
+                                </Box>
+
+                            </Box>
+                        </SimpleGrid>
+                    </div>
+                    {/* ////#endregion ======  DROP AREA ===========*/}
+                </Box >
 
 
-            {/*             
-            {
-                table.getIsSomeColumnsVisible() && <DisplayAreaCharts />
-            } */}
 
+
+
+
+            </SimpleGrid >
         </>
     )
 }
