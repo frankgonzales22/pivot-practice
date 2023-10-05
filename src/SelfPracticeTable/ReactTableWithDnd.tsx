@@ -621,6 +621,10 @@ const ReactTableWithDnd = () => {
                     lg: '1fr 350px'
                 }}
                 gap={5}
+                margin={{
+                    base : '40px',
+                    lg : '0'
+                }}
 
             >
                 <Box className="p-2 ReactTable"
