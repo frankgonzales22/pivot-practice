@@ -13,7 +13,7 @@ const DraggableItem: React.FC<DraggableItemProps> = ({ id, text }) => {
   });
 
   return (
-    <div ref={ref} style={{ padding: '8px', border: '1px solid #ccc', margin: '4px' }}>
+    <div ref={ref}  style={{ padding: '8px', border: '1px solid pink', margin: '4px' }}>
       {text}
     </div>
   );

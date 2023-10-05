@@ -14,7 +14,8 @@ function DraggingItem({ id }: any) {
     return (
         <>
             <div
-             style={{ fontWeight: isDragging ? "bold" : "normal", fontSize: '15px' }} 
+             style={{ fontWeight: isDragging ? "bold" : "normal", fontSize: '15px', border: '1px solid black', padding : '3px' }} 
+             
              ref={drag}
              >{id}
             
